@@ -1,18 +1,12 @@
 <?php
 require_once 'auth.php';
 
-/**
- * Kiểm tra ngày theo định dạng YYYY-MM-DD.
- */
 function calendar_is_valid_date(string $value): bool
 {
     $date = DateTimeImmutable::createFromFormat('!Y-m-d', $value);
     return $date !== false && $date->format('Y-m-d') === $value;
 }
 
-/**
- * Chuyển giá trị từ input datetime-local thành DateTimeImmutable.
- */
 function calendar_parse_datetime_local(string $value): ?DateTimeImmutable
 {
     if ($value === '') {
@@ -65,7 +59,6 @@ if ($filter_from !== null && $filter_to !== null && $filter_from > $filter_to) {
     $filter_error = 'Thời gian bắt đầu lọc phải nhỏ hơn hoặc bằng thời gian kết thúc.';
 }
 
-// Xác định khoảng thời gian của chế độ đang xem.
 switch ($view) {
     case 'day':
         $range_start = $focus_date->setTime(0, 0, 0);
@@ -93,9 +86,6 @@ switch ($view) {
         break;
 }
 
-/**
- * Tạo URL và giữ lại chế độ xem cùng các bộ lọc hiện tại.
- */
 $build_url = function (array $changes = []) use (
     $view,
     $focus_date_string,
@@ -137,7 +127,6 @@ $personal_meeting_condition = "(
     )
 )";
 
-// Chỉ hiển thị người tổ chức từng có cuộc họp liên quan đến Employee đang đăng nhập.
 $organizers = [];
 $sql_organizers = "SELECT DISTINCT nv.id, nv.tennv
                    FROM nhanvien nv
@@ -152,7 +141,6 @@ if ($result_organizers) {
     }
 }
 
-// Chỉ hiển thị các phòng từng xuất hiện trong lịch cá nhân.
 $rooms = [];
 $sql_rooms = "SELECT DISTINCT p.id, p.tenphong
               FROM phong p
@@ -184,7 +172,6 @@ if ($room_id > 0) {
     $where_conditions[] = 'c.phong_id = ' . $room_id;
 }
 
-// Chỉ áp dụng bộ lọc thời gian khi dữ liệu hợp lệ.
 if ($filter_error === '') {
     if ($filter_from !== null) {
         $from_sql = $conn->real_escape_string($filter_from->format('Y-m-d H:i:s'));
@@ -219,8 +206,6 @@ if ($result_meetings === false) {
 } else {
     while ($row = $result_meetings->fetch_assoc()) {
         $meetings[] = $row;
-
-        // Một cuộc họp kéo dài qua nhiều ngày sẽ xuất hiện ở từng ngày liên quan.
         $event_start_day = (new DateTimeImmutable($row['thoigian_batdau']))->setTime(0, 0, 0);
         $event_end_day = (new DateTimeImmutable($row['thoigian_ketthuc']))->modify('-1 second')->setTime(0, 0, 0);
         $cursor = $event_start_day < $range_start ? $range_start : $event_start_day;
@@ -232,7 +217,6 @@ if ($result_meetings === false) {
         }
     }
 }
-
 $meeting_status = static function (array $meeting): array {
     $now = time();
     $start = strtotime($meeting['thoigian_batdau']);

@@ -36,7 +36,6 @@ while ($row = $resultInvited->fetch_assoc()) {
 }
 $stmtInvited->close();
 
-// Hiển thị tất cả phòng còn hoạt động; việc trùng lịch được kiểm tra khi lưu.
 $sql_phong = "SELECT id, tenphong
               FROM phong
               WHERE id = " . (int)$cuochop['phong_id'] . "

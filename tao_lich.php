@@ -1,7 +1,6 @@
 <?php
 require_once 'auth.php';
 
-// Hiển thị tất cả phòng còn hoạt động. Trạng thái bận/trống theo thời điểm sẽ được kiểm tra khi tạo lịch.
 $sql_phong = "SELECT id, tenphong
               FROM phong
               WHERE trangthai IS NULL
@@ -9,7 +8,6 @@ $sql_phong = "SELECT id, tenphong
               ORDER BY tenphong ASC";
 $result_phong = $conn->query($sql_phong);
 
-// Không đưa chính người tạo vào danh sách mời.
 $sql_nv = "SELECT id, tennv, email FROM nhanvien WHERE id != $user_id AND role = 'employee' ORDER BY tennv ASC";
 $result_nv = $conn->query($sql_nv);
 $minDateTime = date('Y-m-d\TH:i');

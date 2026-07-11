@@ -45,7 +45,6 @@ $employees = $conn->query("SELECT id, tennv, email FROM nhanvien WHERE role = 'e
     <div class="text-center mb-4">
         <div class="fs-1 text-primary mb-2"><i class="fa-solid fa-calendar-check"></i></div>
         <h3 class="fw-bold mb-2">Chọn tài khoản nhân viên</h3>
-        <p class="text-muted mb-0">Trang này dùng để mô phỏng đăng nhập khi demo đồ án.</p>
     </div>
 
     <?php if ($error !== ''): ?>
@@ -69,10 +68,6 @@ $employees = $conn->query("SELECT id, tennv, email FROM nhanvien WHERE role = 'e
             <i class="fa-solid fa-right-to-bracket me-2"></i>Vào hệ thống
         </button>
     </form>
-
-    <div class="alert alert-info mt-4 mb-0 small">
-        Để mô phỏng nhiều người cùng lúc, mở mỗi tài khoản ở một trình duyệt hoặc cửa sổ ẩn danh khác nhau.
-    </div>
 </div>
 </body>
 </html>

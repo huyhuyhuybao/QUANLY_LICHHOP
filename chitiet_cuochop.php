@@ -7,7 +7,6 @@ if ($cuochop_id <= 0) {
     stop_with_alert('Không tìm thấy cuộc họp!', 'lich_hop.php');
 }
 
-// Chỉ người tổ chức hoặc người có trong danh sách được mời mới được xem chi tiết.
 $stmtMeeting = $conn->prepare(
     "SELECT c.*, p.tenphong, nv.tennv AS nguoitao
      FROM cuochop c

@@ -14,7 +14,6 @@ if ($cuochop_id <= 0 || !in_array($phanhoi, $phanhoi_hop_le, true)) {
     stop_with_alert('Dữ liệu phản hồi không hợp lệ!', 'lich_hop.php');
 }
 
-// Chỉ người được mời mới được phản hồi và cuộc họp phải chưa kết thúc/chưa bị hủy.
 $check_stmt = $conn->prepare(
     "SELECT c.nguoitao_id, c.trangthai, c.thoigian_ketthuc
      FROM chitiet_thamgia ct

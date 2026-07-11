@@ -2,7 +2,6 @@
 require_once 'auth.php';
 $today = date('Y-m-d');
 
-// Thống kê thật từ cơ sở dữ liệu, không dùng số viết cứng.
 $sql_stats = "SELECT
                 COUNT(DISTINCT c.id) AS tong_cuoc_hop,
                 COUNT(DISTINCT CASE

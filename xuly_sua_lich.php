@@ -91,7 +91,6 @@ if (!empty($busyEmployees)) {
     );
 }
 
-// Lưu trạng thái phản hồi cũ để không làm mất dữ liệu khi chỉ sửa tiêu đề/nội dung.
 $oldResponses = [];
 $stmtOldParticipants = $conn->prepare(
     'SELECT nhanvien_id, trangthai_phanhoi FROM chitiet_thamgia WHERE cuochop_id = ?'

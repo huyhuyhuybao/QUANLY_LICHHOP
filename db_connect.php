@@ -14,6 +14,5 @@ if ($conn->connect_error) {
 
 $conn->set_charset('utf8mb4');
 
-// Đồng bộ NOW() của MySQL với múi giờ Việt Nam để kiểm tra lịch chính xác.
 $conn->query("SET time_zone = '+07:00'");
 ?>

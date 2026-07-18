@@ -70,8 +70,11 @@ $start = strtotime($cuochop['thoigian_batdau']);
 $end = strtotime($cuochop['thoigian_ketthuc']);
 $isCreator = (int)$cuochop['nguoitao_id'] === $user_id;
 $canEditOrCancel = $isCreator && $cuochop['trangthai'] !== 'Đã hủy' && $now < $start;
-$canRespond = !$isCreator && $current_user_response !== null && $cuochop['trangthai'] !== 'Đã hủy' && $now < $end;
-
+$canRespond =
+    !$isCreator
+    && $current_user_response !== null
+    && $cuochop['trangthai'] !== 'Đã hủy'
+    && $now < $start;
 include_once 'header.php';
 include_once 'sidebar.php';
 ?>
@@ -185,7 +188,7 @@ include_once 'sidebar.php';
                             </form>
                         </div>
                     <?php else: ?>
-                        <div class="text-muted">Cuộc họp đã kết thúc hoặc đã bị hủy nên không thể thay đổi phản hồi.</div>
+                        <div class="text-muted">Cuộc họp đã bắt đầu hoặc đã bị hủy nên không thể thay đổi phản hồi.</div>
                     <?php endif; ?>
                 </div>
             <?php endif; ?>

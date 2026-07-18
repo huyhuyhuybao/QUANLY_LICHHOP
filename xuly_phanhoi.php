@@ -15,12 +15,12 @@ if ($cuochop_id <= 0 || !in_array($phanhoi, $phanhoi_hop_le, true)) {
 }
 
 $check_stmt = $conn->prepare(
-    "SELECT c.nguoitao_id, c.trangthai, c.thoigian_ketthuc
-     FROM chitiet_thamgia ct
-     JOIN cuochop c ON c.id = ct.cuochop_id
-     WHERE ct.cuochop_id = ?
-       AND ct.nhanvien_id = ?
-     LIMIT 1"
+    "SELECT c.nguoitao_id, c.trangthai, c.thoigian_batdau
+    FROM chitiet_thamgia ct
+    JOIN cuochop c ON c.id = ct.cuochop_id
+    WHERE ct.cuochop_id = ?
+    AND ct.nhanvien_id = ?
+    LIMIT 1"
 );
 $check_stmt->bind_param('ii', $cuochop_id, $user_id);
 $check_stmt->execute();
@@ -36,10 +36,12 @@ if ((int)$cuochop['nguoitao_id'] === $user_id) {
 if ($cuochop['trangthai'] === 'Đã hủy') {
     stop_with_alert('Cuộc họp đã bị hủy nên không thể phản hồi!', "chitiet_cuochop.php?id=$cuochop_id");
 }
-if (strtotime($cuochop['thoigian_ketthuc']) <= time()) {
-    stop_with_alert('Cuộc họp đã kết thúc nên không thể thay đổi phản hồi!', "chitiet_cuochop.php?id=$cuochop_id");
+if (strtotime($cuochop['thoigian_batdau']) <= time()) {
+    stop_with_alert(
+        'Cuộc họp đã bắt đầu nên không thể thay đổi phản hồi!',
+        "chitiet_cuochop.php?id=$cuochop_id"
+    );
 }
-
 $stmt = $conn->prepare(
     'UPDATE chitiet_thamgia SET trangthai_phanhoi = ? WHERE cuochop_id = ? AND nhanvien_id = ?'
 );
